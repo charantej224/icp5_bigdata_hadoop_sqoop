@@ -1,0 +1,28 @@
+create table employee(emp_id INT NOT NULL AUTO_INCREMENT,emp_name VARCHAR(100), emp_sal INT, PRIMARY KEY(emp_id));
+create table EMP_NEW (EMP_ID INT NOT NULL AUTO_INCREMENT,FIRST_NAME VARCHAR(100),MIDDLE_NAME VARCHAR(100),LAST_NAME VARCHAR(100),PRIMARY KEY(EMP_ID));
+create table EMP_NEW1 (FIRST_NAME VARCHAR(100),MIDDLE_NAME VARCHAR(100),LAST_NAME VARCHAR(100));
+
+insert into employee values (1,'Mike',500);
+insert into employee values (2,'Jake',500);
+insert into employee values (3,'Phil',500);
+insert into employee values (4,'Harry',500);
+insert into employee values (5,'Tom',500);
+insert into employee values (6,'Jerry',500);
+
+select * from employee;
+
+sqoop import --connect jdbc:mysql://localhost/icp5 --username root --password cloudera --table employee --m 1
+
+
+sqoop import --connect jdbc:mysql://localhost/icp5 --username root --password cloudera --table employee --m 1 --target-dir results
+
+sqoop export --connect jdbc:mysql://localhost/icp5_export --username root --password cloudera --table employee --export-dir /user/cloudera/results/part-m-00000
+
+sqoop export --connect jdbc:mysql://localhost/icp5_export --username root --password cloudera --table employee --export-dir /user/cloudera/results/part-m-00000
+
+
+create table stocks_prices (stock_date date,stock_price_open float,stock_price_high float,stock_price_low float,stock_price_close float,stock_volume float,stock_price_adj_close float);
+
+sqoop export --connect jdbc:mysql://localhost/icp5 --username root --password cloudera --table stocks_prices --export-dir /user/hive/warehouse/stocks_prices/
+
+sqoop import --connect jdbc:mysql://localhost/icp5 --username root --password cloudera --table stocks_prices --m 1 --target-dir import_stocks

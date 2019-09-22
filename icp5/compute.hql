@@ -1,0 +1,3 @@
+ANALYZE TABLE stocks_prices COMPUTE STATISTICS;
+DESCRIBE EXTENDED stocks_prices;
+

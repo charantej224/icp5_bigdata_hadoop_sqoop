@@ -1,0 +1,1 @@
+SELECT REGEXP_EXTRACT(line, "(.*) (.*)", 2) FROM FILES;
